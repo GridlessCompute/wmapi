@@ -1,4 +1,4 @@
-module wmapi
+module github.com/GridlessCompute/wmapi
 
 go 1.25.0
 

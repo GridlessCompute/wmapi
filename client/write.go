@@ -4,7 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"strconv"
-	"wmapi/transport"
+
+		"github.com/GridlessCompute/wmapi/transport"
 )
 
 const (
@@ -630,3 +631,4 @@ func (w *WriteAPI) EnableBTMinerInit() (*CommandResponse, error) {
 
 	return &cmdResponse, nil
 }
+

@@ -3,7 +3,7 @@ package client
 import (
 	"encoding/json"
 	"fmt"
-	"wmapi/transport"
+		"github.com/GridlessCompute/wmapi/transport"
 )
 
 type ReadAPI struct {
@@ -140,3 +140,4 @@ func (r *ReadAPI) ErrorCode() (*ErrorResponse, error) {
 	}
 	return &errorResponse, nil
 }
+

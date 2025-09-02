@@ -4,8 +4,9 @@ package wmapi
 
 import (
 	"fmt"
-	"wmapi/client"
-	"wmapi/transport"
+
+		"github.com/GridlessCompute/wmapi/client"
+	"github.com/GridlessCompute/wmapi/transport"
 )
 
 type WhatsminerMiddleware struct {
@@ -32,3 +33,4 @@ func NewWhatsminerAPI(ipAddress string, port int, adminPassword string) (*Whatsm
 
 	return mw, nil
 }
+
