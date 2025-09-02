@@ -1,9 +1,10 @@
-package wmapi
+package client
 
 import (
 	"encoding/json"
 	"fmt"
 	"strconv"
+	"wmapi/transport"
 )
 
 const (
@@ -13,7 +14,8 @@ const (
 )
 
 type WriteAPI struct {
-	mw *WhatsminerMiddleware
+	API   *transport.WhatsminerAPI
+	Token *transport.WhatsminerAccessToken
 }
 
 type CustomLedSettings struct {
@@ -46,7 +48,7 @@ func (w *WriteAPI) Pools(pools ...Pool) (*CommandResponse, error) {
 		params[fmt.Sprintf("passwd%d", i+1)] = p.Password
 	}
 
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, "pools", params)
+	result, err := w.API.ExecCommand(w.Token, "pools", params)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +68,7 @@ func (w *WriteAPI) Pools(pools ...Pool) (*CommandResponse, error) {
 
 // Reboot initiates a reboot of the miner
 func (w *WriteAPI) Restart() (*CommandResponse, error) {
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, "restart_btminer", nil)
+	result, err := w.API.ExecCommand(w.Token, "restart_btminer", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +87,7 @@ func (w *WriteAPI) Restart() (*CommandResponse, error) {
 }
 
 func (w *WriteAPI) PowerOffHashboard() (*CommandResponse, error) {
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, "power_off", nil)
+	result, err := w.API.ExecCommand(w.Token, "power_off", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +106,7 @@ func (w *WriteAPI) PowerOffHashboard() (*CommandResponse, error) {
 }
 
 func (w *WriteAPI) PowerOnHashboard() (*CommandResponse, error) {
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, "power_on", nil)
+	result, err := w.API.ExecCommand(w.Token, "power_on", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -125,7 +127,7 @@ func (w *WriteAPI) PowerOnHashboard() (*CommandResponse, error) {
 func (w *WriteAPI) ManageLedRestore(mode string) (*CommandResponse, error) {
 	param := map[string]any{"param": mode}
 
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, "set_led", param)
+	result, err := w.API.ExecCommand(w.Token, "set_led", param)
 	if err != nil {
 		return nil, err
 	}
@@ -150,7 +152,7 @@ func (w *WriteAPI) ManageLedCustom(settings CustomLedSettings) (*CommandResponse
 		"duration": settings.Duration,
 		"start":    settings.Start,
 	}
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, "set_led", param)
+	result, err := w.API.ExecCommand(w.Token, "set_led", param)
 	if err != nil {
 		return nil, err
 	}
@@ -169,7 +171,7 @@ func (w *WriteAPI) ManageLedCustom(settings CustomLedSettings) (*CommandResponse
 }
 
 func (w *WriteAPI) SwitchPowerMode(mode string) (*CommandResponse, error) {
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, mode, nil)
+	result, err := w.API.ExecCommand(w.Token, mode, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -188,7 +190,7 @@ func (w *WriteAPI) SwitchPowerMode(mode string) (*CommandResponse, error) {
 }
 
 func (w *WriteAPI) RebootSystem() (*CommandResponse, error) {
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, "reboot", nil)
+	result, err := w.API.ExecCommand(w.Token, "reboot", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -207,7 +209,7 @@ func (w *WriteAPI) RebootSystem() (*CommandResponse, error) {
 }
 
 func (w *WriteAPI) RestoreFactorySettings() (*CommandResponse, error) {
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, "factory_reset", nil)
+	result, err := w.API.ExecCommand(w.Token, "factory_reset", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -231,7 +233,7 @@ func (w *WriteAPI) ModifyPassword(oldPwd, newPwd string) (*CommandResponse, erro
 		"new": newPwd,
 	}
 
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, "factory_reset", param)
+	result, err := w.API.ExecCommand(w.Token, "factory_reset", param)
 	if err != nil {
 		return nil, err
 	}
@@ -251,7 +253,7 @@ func (w *WriteAPI) ModifyPassword(oldPwd, newPwd string) (*CommandResponse, erro
 
 func (w *WriteAPI) NetworkSetDHCP() (*CommandResponse, error) {
 	param := map[string]any{"param": "dhcp"}
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, "factory_reset", param)
+	result, err := w.API.ExecCommand(w.Token, "factory_reset", param)
 	if err != nil {
 		return nil, err
 	}
@@ -278,7 +280,7 @@ func (w *WriteAPI) NetworkSetCustom(conf CustomNetworkSettings) (*CommandRespons
 		"host": conf.Host,
 	}
 
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, "factory_reset", param)
+	result, err := w.API.ExecCommand(w.Token, "factory_reset", param)
 	if err != nil {
 		return nil, err
 	}
@@ -300,7 +302,7 @@ func (w *WriteAPI) TargetFreq(tgt int) (*CommandResponse, error) {
 	tgt = min(tgt, 100)
 	tgt = max(tgt, -100)
 	param := map[string]any{"percent": tgt}
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, "factory_reset", param)
+	result, err := w.API.ExecCommand(w.Token, "factory_reset", param)
 	if err != nil {
 		return nil, err
 	}
@@ -319,7 +321,7 @@ func (w *WriteAPI) TargetFreq(tgt int) (*CommandResponse, error) {
 }
 
 func (w *WriteAPI) EnableFastboot() (*CommandResponse, error) {
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, "enable_btminer_fast_boot", nil)
+	result, err := w.API.ExecCommand(w.Token, "enable_btminer_fast_boot", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -338,7 +340,7 @@ func (w *WriteAPI) EnableFastboot() (*CommandResponse, error) {
 }
 
 func (w *WriteAPI) Disablefastboot() (*CommandResponse, error) {
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, "disable_btminer_fast_boot", nil)
+	result, err := w.API.ExecCommand(w.Token, "disable_btminer_fast_boot", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -357,7 +359,7 @@ func (w *WriteAPI) Disablefastboot() (*CommandResponse, error) {
 }
 
 func (w *WriteAPI) EnableWebPools() (*CommandResponse, error) {
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, "enable_web_pools", nil)
+	result, err := w.API.ExecCommand(w.Token, "enable_web_pools", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -376,7 +378,7 @@ func (w *WriteAPI) EnableWebPools() (*CommandResponse, error) {
 }
 
 func (w *WriteAPI) DisableWebPools() (*CommandResponse, error) {
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, "disable_web_pools", nil)
+	result, err := w.API.ExecCommand(w.Token, "disable_web_pools", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -396,7 +398,7 @@ func (w *WriteAPI) DisableWebPools() (*CommandResponse, error) {
 
 func (w *WriteAPI) ChangeHostName(name string) (*CommandResponse, error) {
 	param := map[string]any{"hostname": name}
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, "set_hostname", param)
+	result, err := w.API.ExecCommand(w.Token, "set_hostname", param)
 	if err != nil {
 		return nil, err
 	}
@@ -421,7 +423,7 @@ func (w *WriteAPI) PowerPercent(pct int) (*CommandResponse, error) {
 	pctStr := strconv.Itoa(pct)
 
 	param := map[string]any{"percent": pctStr}
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, "set_power_pct", param)
+	result, err := w.API.ExecCommand(w.Token, "set_power_pct", param)
 	if err != nil {
 		return nil, err
 	}
@@ -446,7 +448,7 @@ func (w *WriteAPI) PowerPercentV2(pct int) (*CommandResponse, error) {
 	pctStr := strconv.Itoa(pct)
 
 	param := map[string]any{"percent": pctStr}
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, "set_power_pct_v2", param)
+	result, err := w.API.ExecCommand(w.Token, "set_power_pct_v2", param)
 	if err != nil {
 		return nil, err
 	}
@@ -471,7 +473,7 @@ func (w *WriteAPI) TempOffset(offset int) (*CommandResponse, error) {
 	pctStr := strconv.Itoa(offset)
 
 	param := map[string]any{"temp_offset": pctStr}
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, "set_temp_offset", param)
+	result, err := w.API.ExecCommand(w.Token, "set_temp_offset", param)
 	if err != nil {
 		return nil, err
 	}
@@ -496,7 +498,7 @@ func (w *WriteAPI) AdjPowerLimit(limit int) (*CommandResponse, error) {
 	pctStr := strconv.Itoa(limit)
 
 	param := map[string]any{"power_limit": pctStr}
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, "adjust_power_limit", param)
+	result, err := w.API.ExecCommand(w.Token, "adjust_power_limit", param)
 	if err != nil {
 		return nil, err
 	}
@@ -521,7 +523,7 @@ func (w *WriteAPI) AdjUpfreqSpeed(speed int) (*CommandResponse, error) {
 	pctStr := strconv.Itoa(speed)
 
 	param := map[string]any{"upfreq_speed": pctStr}
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, "adjust_upfreq_speed", param)
+	result, err := w.API.ExecCommand(w.Token, "adjust_upfreq_speed", param)
 	if err != nil {
 		return nil, err
 	}
@@ -547,7 +549,7 @@ func (w *WriteAPI) PowerOffCool(cool bool) (*CommandResponse, error) {
 	}
 
 	param := map[string]any{"poweroff_cool": c}
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, "set_poweroff_cool", param)
+	result, err := w.API.ExecCommand(w.Token, "set_poweroff_cool", param)
 	if err != nil {
 		return nil, err
 	}
@@ -573,7 +575,7 @@ func (w *WriteAPI) FanZeroSpeed(zero bool) (*CommandResponse, error) {
 	}
 
 	param := map[string]any{"fan_zero_speed": z}
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, "set_fan_zero_speed", param)
+	result, err := w.API.ExecCommand(w.Token, "set_fan_zero_speed", param)
 	if err != nil {
 		return nil, err
 	}
@@ -592,7 +594,7 @@ func (w *WriteAPI) FanZeroSpeed(zero bool) (*CommandResponse, error) {
 }
 
 func (w *WriteAPI) DisableBTMinerInit() (*CommandResponse, error) {
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, "disbale_btminer_init", nil)
+	result, err := w.API.ExecCommand(w.Token, "disbale_btminer_init", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -611,7 +613,7 @@ func (w *WriteAPI) DisableBTMinerInit() (*CommandResponse, error) {
 }
 
 func (w *WriteAPI) EnableBTMinerInit() (*CommandResponse, error) {
-	result, err := w.mw.api.ExecCommand(w.mw.accessToken, "enable_btminer_init", nil)
+	result, err := w.API.ExecCommand(w.Token, "enable_btminer_init", nil)
 	if err != nil {
 		return nil, err
 	}

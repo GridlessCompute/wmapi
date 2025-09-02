@@ -1,17 +1,19 @@
-package wmapi
+package client
 
 import (
 	"encoding/json"
 	"fmt"
+	"wmapi/transport"
 )
 
 type ReadAPI struct {
-	mw *WhatsminerMiddleware
+	API   *transport.WhatsminerAPI
+	Token *transport.WhatsminerAccessToken
 }
 
 // Summary retrieves the miner's summary information
 func (r *ReadAPI) Summary() (*SummaryResponse, error) {
-	data, err := r.mw.api.GetReadOnlyInfo(r.mw.accessToken, "summary", nil)
+	data, err := r.API.GetReadOnlyInfo(r.Token, "summary", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -28,7 +30,7 @@ func (r *ReadAPI) Summary() (*SummaryResponse, error) {
 
 // Pools retrieves the configured mining pools
 func (r *ReadAPI) Pools() (*PoolsResponse, error) {
-	data, err := r.mw.api.GetReadOnlyInfo(r.mw.accessToken, "pools", nil)
+	data, err := r.API.GetReadOnlyInfo(r.Token, "pools", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -44,7 +46,7 @@ func (r *ReadAPI) Pools() (*PoolsResponse, error) {
 }
 
 func (r *ReadAPI) Edevs() (*EdevsResponse, error) {
-	data, err := r.mw.api.GetReadOnlyInfo(r.mw.accessToken, "edevs", nil)
+	data, err := r.API.GetReadOnlyInfo(r.Token, "edevs", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +62,7 @@ func (r *ReadAPI) Edevs() (*EdevsResponse, error) {
 }
 
 func (r *ReadAPI) DevDetails() (*DevdetailsResponse, error) {
-	data, err := r.mw.api.GetReadOnlyInfo(r.mw.accessToken, "devdetails", nil)
+	data, err := r.API.GetReadOnlyInfo(r.Token, "devdetails", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +78,7 @@ func (r *ReadAPI) DevDetails() (*DevdetailsResponse, error) {
 }
 
 func (r *ReadAPI) PSU() (*PSUResponse, error) {
-	data, err := r.mw.api.GetReadOnlyInfo(r.mw.accessToken, "get_psu", nil)
+	data, err := r.API.GetReadOnlyInfo(r.Token, "get_psu", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -92,7 +94,7 @@ func (r *ReadAPI) PSU() (*PSUResponse, error) {
 }
 
 func (r *ReadAPI) Version() (*VersionResponse, error) {
-	data, err := r.mw.api.GetReadOnlyInfo(r.mw.accessToken, "get_version", nil)
+	data, err := r.API.GetReadOnlyInfo(r.Token, "get_version", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +110,7 @@ func (r *ReadAPI) Version() (*VersionResponse, error) {
 }
 
 func (r *ReadAPI) Status() (*StatusResponse, error) {
-	data, err := r.mw.api.GetReadOnlyInfo(r.mw.accessToken, "status", nil)
+	data, err := r.API.GetReadOnlyInfo(r.Token, "status", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -124,7 +126,7 @@ func (r *ReadAPI) Status() (*StatusResponse, error) {
 }
 
 func (r *ReadAPI) ErrorCode() (*ErrorResponse, error) {
-	data, err := r.mw.api.GetReadOnlyInfo(r.mw.accessToken, "get_error_code", nil)
+	data, err := r.API.GetReadOnlyInfo(r.Token, "get_error_code", nil)
 	if err != nil {
 		return nil, err
 	}

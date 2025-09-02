@@ -1,4 +1,10 @@
-package wmapi
+package client
+
+type Pool struct {
+	URL      string
+	Worker   string
+	Password string
+}
 
 type CommandResponse struct {
 	STATUS      string `json:"STATUS"`
