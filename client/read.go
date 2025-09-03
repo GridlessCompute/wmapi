@@ -3,7 +3,7 @@ package client
 import (
 	"encoding/json"
 	"fmt"
-		"github.com/GridlessCompute/wmapi/transport"
+	"github.com/GridlessCompute/wmapi/transport"
 )
 
 type ReadAPI struct {
@@ -125,6 +125,22 @@ func (r *ReadAPI) Status() (*StatusResponse, error) {
 	return &status, nil
 }
 
+func (r *ReadAPI) MinerInfo() (*MinerInfoResponse, error) {
+	data, err := r.API.GetReadOnlyInfo(r.Token, "get_miner_info", nil)
+	if err != nil {
+		return nil, err
+	}
+	var minerInfo MinerInfoResponse
+	jsonData, err := json.Marshal(data)
+	if err != nil {
+		return nil, fmt.Errorf("failed to marshal data: %w", err)
+	}
+	if err := json.Unmarshal(jsonData, &minerInfo); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal status: %w", err)
+	}
+	return &minerInfo, nil
+}
+
 func (r *ReadAPI) ErrorCode() (*ErrorResponse, error) {
 	data, err := r.API.GetReadOnlyInfo(r.Token, "get_error_code", nil)
 	if err != nil {
@@ -140,4 +156,3 @@ func (r *ReadAPI) ErrorCode() (*ErrorResponse, error) {
 	}
 	return &errorResponse, nil
 }
-

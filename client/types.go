@@ -115,6 +115,22 @@ type EdevsResponse struct {
 	} `json:"DEVS"`
 }
 
+type MinerInfoResponse struct {
+	STATUS string `json:"STATUS"`
+	When   int    `json:"When"`
+	Code   int    `json:"Code"`
+	Msg    struct {
+		IP      string `json:"ip"`
+		Proto   string `json:"proto"`
+		Netmask string `json:"netmask"`
+		DNS     string `json:"dns"`
+		Mac     string `json:"mac"`
+		Ledstat string `json:"ledstat"`
+		Gateway string `json:"gateway"`
+	} `json:"Msg"`
+	Description string `json:"Description"`
+}
+
 type PoolsResponse struct {
 	STATUS []struct {
 		STATUS string `json:"STATUS"`
@@ -201,3 +217,4 @@ type SummaryResponse struct {
 		BtminerFastBoot       string  `json:"Btminer Fast Boot"`
 	} `json:"SUMMARY"`
 }
+
