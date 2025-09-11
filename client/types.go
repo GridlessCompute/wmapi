@@ -7,19 +7,19 @@ type Pool struct {
 }
 
 type CommandResponse struct {
-	STATUS      string `json:"STATUS"`
-	When        int    `json:"When"`
-	Code        int    `json:"Code"`
-	Msg         any    `json:"Msg"`
-	Description string `json:"Description"`
+	STATUS      string  `json:"STATUS"`
+	When        float64 `json:"When"`
+	Code        float64 `json:"Code"`
+	Msg         any     `json:"Msg"`
+	Description string  `json:"Description"`
 }
 
 type ErrorResponse struct {
-	STATUS      string `json:"STATUS"`
-	When        int    `json:"When"`
-	Code        int    `json:"Code"`
-	Msg         any    `json:"Msg"`
-	Description string `json:"Description"`
+	STATUS      string  `json:"STATUS"`
+	When        float64 `json:"When"`
+	Code        float64 `json:"Code"`
+	Msg         any     `json:"Msg"`
+	Description string  `json:"Description"`
 }
 
 type StatusResponse struct {
@@ -31,9 +31,9 @@ type StatusResponse struct {
 }
 
 type VersionResponse struct {
-	STATUS string `json:"STATUS"`
-	When   int    `json:"When"`
-	Code   int    `json:"Code"`
+	STATUS string  `json:"STATUS"`
+	When   float64 `json:"When"`
+	Code   float64 `json:"Code"`
 	Msg    struct {
 		APIVer   string `json:"api_ver"`
 		FwVer    string `json:"fw_ver"`
@@ -44,9 +44,9 @@ type VersionResponse struct {
 }
 
 type PSUResponse struct {
-	STATUS string `json:"STATUS"`
-	When   int    `json:"When"`
-	Code   int    `json:"Code"`
+	STATUS string  `json:"STATUS"`
+	When   float64 `json:"When"`
+	Code   float64 `json:"Code"`
 	Msg    struct {
 		Name      string `json:"name"`
 		HwVersion string `json:"hw_version"`
@@ -67,49 +67,49 @@ type PSUResponse struct {
 type DevdetailsResponse struct {
 	STATUS     ResponseStatus `json:"STATUS"`
 	DEVDETAILS []struct {
-		DEVDETAILS int    `json:"DEVDETAILS"`
-		Name       string `json:"Name"`
-		ID         int    `json:"ID"`
-		Driver     string `json:"Driver"`
-		Kernel     string `json:"Kernel"`
-		Model      string `json:"Model"`
+		DEVDETAILS float64 `json:"DEVDETAILS"`
+		Name       string  `json:"Name"`
+		ID         float64 `json:"ID"`
+		Driver     string  `json:"Driver"`
+		Kernel     string  `json:"Kernel"`
+		Model      string  `json:"Model"`
 	} `json:"DEVDETAILS"`
 }
 
 type EdevsResponse struct {
 	STATUS ResponseStatus `json:"STATUS"`
 	DEVS   []struct {
-		ASC            int     `json:"ASC"`
-		Slot           int     `json:"Slot"`
+		ASC            float64 `json:"ASC"`
+		Slot           float64 `json:"Slot"`
 		Enabled        string  `json:"Enabled"`
 		Status         string  `json:"Status"`
-		Temperature    int     `json:"Temperature"`
-		ChipFrequency  int     `json:"Chip Frequency"`
+		Temperature    float64 `json:"Temperature"`
+		ChipFrequency  float64 `json:"Chip Frequency"`
 		MHSAv          float64 `json:"MHS av"`
 		MHS5S          float64 `json:"MHS 5s"`
 		MHS1M          float64 `json:"MHS 1m"`
 		MHS5M          float64 `json:"MHS 5m"`
 		MHS15M         float64 `json:"MHS 15m"`
 		HSRT           float64 `json:"HS RT"`
-		HSFactory      int     `json:"HS Factory,omitempty"`
-		Accepted       int     `json:"Accepted"`
-		Rejected       int     `json:"Rejected"`
-		LastValidWork  int     `json:"Last Valid Work"`
-		UpfreqComplete int     `json:"Upfreq Complete"`
-		EffectiveChips int     `json:"Effective Chips"`
+		HSFactory      float64 `json:"HS Factory,omitempty"`
+		Accepted       float64 `json:"Accepted"`
+		Rejected       float64 `json:"Rejected"`
+		LastValidWork  float64 `json:"Last Valid Work"`
+		UpfreqComplete float64 `json:"Upfreq Complete"`
+		EffectiveChips float64 `json:"Effective Chips"`
 		PCBSN          string  `json:"PCB SN"`
 		ChipData       string  `json:"Chip Data"`
 		ChipTempMin    float64 `json:"Chip Temp Min"`
-		ChipTempMax    int     `json:"Chip Temp Max"`
+		ChipTempMax    float64 `json:"Chip Temp Max"`
 		ChipTempAvg    float64 `json:"Chip Temp Avg"`
-		ChipVolDiff    int     `json:"chip_vol_diff"`
+		ChipVolDiff    float64 `json:"chip_vol_diff"`
 	} `json:"DEVS"`
 }
 
 type MinerInfoResponse struct {
-	STATUS string `json:"STATUS"`
-	When   int    `json:"When"`
-	Code   int    `json:"Code"`
+	STATUS string  `json:"STATUS"`
+	When   float64 `json:"When"`
+	Code   float64 `json:"Code"`
 	Msg    struct {
 		IP      string `json:"ip"`
 		Proto   string `json:"proto"`
@@ -123,86 +123,86 @@ type MinerInfoResponse struct {
 }
 
 type ResponseStatus []struct {
-	STATUS      string `json:"STATUS"`
-	When        int    `json:"When"`
-	Code        int    `json:"Code"`
-	Msg         string `json:"Msg"`
-	Description string `json:"Description"`
+	// STATUS      string  `json:"STATUS"`
+	When        float64 `json:"When"`
+	Code        float64 `json:"Code"`
+	Msg         string  `json:"Msg"`
+	Description string  `json:"Description"`
 }
 
 type PoolsResponse struct {
 	STATUS ResponseStatus `json:"STATUS"`
 	POOLS  []struct {
-		POOL                int     `json:"POOL"`
+		POOL                float64 `json:"POOL"`
 		URL                 string  `json:"URL"`
 		Status              string  `json:"Status"`
-		Priority            int     `json:"Priority"`
-		Quota               int     `json:"Quota"`
+		Priority            float64 `json:"Priority"`
+		Quota               float64 `json:"Quota"`
 		LongPoll            string  `json:"Long Poll"`
-		Getworks            int     `json:"Getworks"`
-		Accepted            int     `json:"Accepted"`
-		Rejected            int     `json:"Rejected"`
-		Works               int     `json:"Works"`
-		Discarded           int     `json:"Discarded"`
-		Stale               int     `json:"Stale"`
-		GetFailures         int     `json:"Get Failures"`
-		RemoteFailures      int     `json:"Remote Failures"`
+		Getworks            float64 `json:"Getworks"`
+		Accepted            float64 `json:"Accepted"`
+		Rejected            float64 `json:"Rejected"`
+		Works               float64 `json:"Works"`
+		Discarded           float64 `json:"Discarded"`
+		Stale               float64 `json:"Stale"`
+		GetFailures         float64 `json:"Get Failures"`
+		RemoteFailures      float64 `json:"Remote Failures"`
 		User                string  `json:"User"`
-		LastShareTime       int     `json:"Last Share Time"`
-		Diff1Shares         int     `json:"Diff1 Shares"`
+		LastShareTime       float64 `json:"Last Share Time"`
+		Diff1Shares         float64 `json:"Diff1 Shares"`
 		ProxyType           string  `json:"Proxy Type"`
 		Proxy               string  `json:"Proxy"`
-		DifficultyAccepted  int     `json:"Difficulty Accepted"`
-		DifficultyRejected  int     `json:"Difficulty Rejected"`
-		DifficultyStale     int     `json:"Difficulty Stale"`
-		LastShareDifficulty int     `json:"Last Share Difficulty"`
-		WorkDifficulty      int     `json:"Work Difficulty"`
-		HasStratum          int     `json:"Has Stratum"`
+		DifficultyAccepted  float64 `json:"Difficulty Accepted"`
+		DifficultyRejected  float64 `json:"Difficulty Rejected"`
+		DifficultyStale     float64 `json:"Difficulty Stale"`
+		LastShareDifficulty float64 `json:"Last Share Difficulty"`
+		WorkDifficulty      float64 `json:"Work Difficulty"`
+		HasStratum          float64 `json:"Has Stratum"`
 		StratumActive       bool    `json:"Stratum Active"`
 		StratumURL          string  `json:"Stratum URL"`
-		StratumDifficulty   int     `json:"Stratum Difficulty"`
-		BestShare           int     `json:"Best Share"`
+		StratumDifficulty   float64 `json:"Stratum Difficulty"`
+		BestShare           float64 `json:"Best Share"`
 		PoolRejected        float64 `json:"Pool Rejected%"`
-		PoolStale           int     `json:"Pool Stale%"`
+		PoolStale           float64 `json:"Pool Stale%"`
 		BadWork             float64 `json:"Bad Work"`
-		CurrentBlockHeight  int     `json:"Current Block Height"`
-		CurrentBlockVersion int     `json:"Current Block Version"`
+		CurrentBlockHeight  float64 `json:"Current Block Height"`
+		CurrentBlockVersion float64 `json:"Current Block Version"`
 	} `json:"POOLS"`
 }
 
 type SummaryResponse struct {
 	STATUS  ResponseStatus `json:"STATUS"`
 	SUMMARY []struct {
-		Elapsed               int     `json:"Elapsed"`
+		Elapsed               float64 `json:"Elapsed"`
 		MHSAv                 float64 `json:"MHS av"`
 		MHS5S                 float64 `json:"MHS 5s"`
 		MHS1M                 float64 `json:"MHS 1m"`
 		MHS5M                 float64 `json:"MHS 5m"`
 		MHS15M                float64 `json:"MHS 15m"`
 		HSRT                  float64 `json:"HS RT"`
-		Accepted              int     `json:"Accepted"`
-		Rejected              int     `json:"Rejected"`
-		TotalMH               int64   `json:"Total MH"`
-		Temperature           int     `json:"Temperature"`
-		FreqAvg               int     `json:"freq_avg"`
-		FanSpeedIn            int     `json:"Fan Speed In"`
-		FanSpeedOut           int     `json:"Fan Speed Out"`
-		Power                 int     `json:"Power"`
+		Accepted              float64 `json:"Accepted"`
+		Rejected              float64 `json:"Rejected"`
+		TotalMH               float64 `json:"Total MH"`
+		Temperature           float64 `json:"Temperature"`
+		FreqAvg               float64 `json:"freq_avg"`
+		FanSpeedIn            float64 `json:"Fan Speed In"`
+		FanSpeedOut           float64 `json:"Fan Speed Out"`
+		Power                 float64 `json:"Power"`
 		PowerRate             float64 `json:"Power Rate"`
-		PoolRejected          int     `json:"Pool Rejected%"`
-		PoolStale             int     `json:"Pool Stale%"`
-		LastGetwork           int     `json:"Last getwork"`
-		Uptime                int     `json:"Uptime"`
-		SecurityMode          int     `json:"Security Mode"`
+		PoolRejected          float64 `json:"Pool Rejected%"`
+		PoolStale             float64 `json:"Pool Stale%"`
+		LastGetwork           float64 `json:"Last getwork"`
+		Uptime                float64 `json:"Uptime"`
+		SecurityMode          float64 `json:"Security Mode"`
 		HashStable            bool    `json:"Hash Stable"`
-		HashStableCostSeconds int     `json:"Hash Stable Cost Seconds"`
+		HashStableCostSeconds float64 `json:"Hash Stable Cost Seconds"`
 		HashDeviation         float64 `json:"Hash Deviation%"`
-		TargetFreq            int     `json:"Target Freq"`
-		TargetMHS             int     `json:"Target MHS"`
-		EnvTemp               int     `json:"Env Temp"`
+		TargetFreq            float64 `json:"Target Freq"`
+		TargetMHS             float64 `json:"Target MHS"`
+		EnvTemp               float64 `json:"Env Temp"`
 		PowerMode             string  `json:"Power Mode"`
-		FactoryGHS            int     `json:"Factory GHS"`
-		PowerLimit            int     `json:"Power Limit"`
+		FactoryGHS            float64 `json:"Factory GHS"`
+		PowerLimit            float64 `json:"Power Limit"`
 		ChipTempMin           float64 `json:"Chip Temp Min"`
 		ChipTempMax           float64 `json:"Chip Temp Max"`
 		ChipTempAvg           float64 `json:"Chip Temp Avg"`
