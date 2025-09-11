@@ -65,7 +65,13 @@ type PSUResponse struct {
 }
 
 type DevdetailsResponse struct {
-	STATUS     ResponseStatus `json:"STATUS"`
+	// STATUS []struct {
+	// 	STATUS      string `json:"STATUS"`
+	// 	When        float64    `json:"When"`
+	// 	Code        float64    `json:"Code"`
+	// 	Msg         string `json:"Msg"`
+	// 	Description string `json:"Description"`
+	// } `json:"STATUS"`
 	DEVDETAILS []struct {
 		DEVDETAILS float64 `json:"DEVDETAILS"`
 		Name       string  `json:"Name"`
@@ -77,8 +83,11 @@ type DevdetailsResponse struct {
 }
 
 type EdevsResponse struct {
-	STATUS ResponseStatus `json:"STATUS"`
-	DEVS   []struct {
+	// STATUS []struct {
+	// 	STATUS string `json:"STATUS"`
+	// 	Msg    string `json:"Msg"`
+	// } `json:"STATUS"`
+	DEVS []struct {
 		ASC            float64 `json:"ASC"`
 		Slot           float64 `json:"Slot"`
 		Enabled        string  `json:"Enabled"`
@@ -122,17 +131,12 @@ type MinerInfoResponse struct {
 	Description string `json:"Description"`
 }
 
-type ResponseStatus []struct {
-	// STATUS      string  `json:"STATUS"`
-	When        float64 `json:"When"`
-	Code        float64 `json:"Code"`
-	Msg         string  `json:"Msg"`
-	Description string  `json:"Description"`
-}
-
 type PoolsResponse struct {
-	STATUS ResponseStatus `json:"STATUS"`
-	POOLS  []struct {
+	// STATUS []struct {
+	// 	STATUS string `json:"STATUS"`
+	// 	Msg    string `json:"Msg"`
+	// } `json:"STATUS"`
+	POOLS []struct {
 		POOL                float64 `json:"POOL"`
 		URL                 string  `json:"URL"`
 		Status              string  `json:"Status"`
@@ -171,7 +175,10 @@ type PoolsResponse struct {
 }
 
 type SummaryResponse struct {
-	STATUS  ResponseStatus `json:"STATUS"`
+	// STATUS []struct {
+	// 	STATUS string `json:"STATUS"`
+	// 	Msg    string `json:"Msg"`
+	// } `json:"STATUS"`
 	SUMMARY []struct {
 		Elapsed               float64 `json:"Elapsed"`
 		MHSAv                 float64 `json:"MHS av"`
