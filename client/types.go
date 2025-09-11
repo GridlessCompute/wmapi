@@ -65,13 +65,7 @@ type PSUResponse struct {
 }
 
 type DevdetailsResponse struct {
-	STATUS []struct {
-		STATUS      string `json:"STATUS"`
-		When        int    `json:"When"`
-		Code        int    `json:"Code"`
-		Msg         string `json:"Msg"`
-		Description string `json:"Description"`
-	} `json:"STATUS"`
+	STATUS     ResponseStatus `json:"STATUS"`
 	DEVDETAILS []struct {
 		DEVDETAILS int    `json:"DEVDETAILS"`
 		Name       string `json:"Name"`
@@ -83,11 +77,8 @@ type DevdetailsResponse struct {
 }
 
 type EdevsResponse struct {
-	STATUS []struct {
-		STATUS string `json:"STATUS"`
-		Msg    string `json:"Msg"`
-	} `json:"STATUS"`
-	DEVS []struct {
+	STATUS ResponseStatus `json:"STATUS"`
+	DEVS   []struct {
 		ASC            int     `json:"ASC"`
 		Slot           int     `json:"Slot"`
 		Enabled        string  `json:"Enabled"`
@@ -131,54 +122,56 @@ type MinerInfoResponse struct {
 	Description string `json:"Description"`
 }
 
+type ResponseStatus []struct {
+	STATUS      string `json:"STATUS"`
+	When        int    `json:"When"`
+	Code        int    `json:"Code"`
+	Msg         string `json:"Msg"`
+	Description string `json:"Description"`
+}
+
 type PoolsResponse struct {
-	STATUS []struct {
-		STATUS string `json:"STATUS"`
-		Msg    string `json:"Msg"`
-	} `json:"STATUS"`
-	POOLS []struct {
-		POOL                int    `json:"POOL"`
-		URL                 string `json:"URL"`
-		Status              string `json:"Status"`
-		Priority            int    `json:"Priority"`
-		Quota               int    `json:"Quota"`
-		LongPoll            string `json:"Long Poll"`
-		Getworks            int    `json:"Getworks"`
-		Accepted            int    `json:"Accepted"`
-		Rejected            int    `json:"Rejected"`
-		Works               int    `json:"Works"`
-		Discarded           int    `json:"Discarded"`
-		Stale               int    `json:"Stale"`
-		GetFailures         int    `json:"Get Failures"`
-		RemoteFailures      int    `json:"Remote Failures"`
-		User                string `json:"User"`
-		LastShareTime       int    `json:"Last Share Time"`
-		Diff1Shares         int    `json:"Diff1 Shares"`
-		ProxyType           string `json:"Proxy Type"`
-		Proxy               string `json:"Proxy"`
-		DifficultyAccepted  int    `json:"Difficulty Accepted"`
-		DifficultyRejected  int    `json:"Difficulty Rejected"`
-		DifficultyStale     int    `json:"Difficulty Stale"`
-		LastShareDifficulty int    `json:"Last Share Difficulty"`
-		WorkDifficulty      int    `json:"Work Difficulty"`
-		HasStratum          int    `json:"Has Stratum"`
-		StratumActive       bool   `json:"Stratum Active"`
-		StratumURL          string `json:"Stratum URL"`
-		StratumDifficulty   int    `json:"Stratum Difficulty"`
-		BestShare           int    `json:"Best Share"`
-		PoolRejected        int    `json:"Pool Rejected%"`
-		PoolStale           int    `json:"Pool Stale%"`
-		BadWork             int    `json:"Bad Work"`
-		CurrentBlockHeight  int    `json:"Current Block Height"`
-		CurrentBlockVersion int    `json:"Current Block Version"`
+	STATUS ResponseStatus `json:"STATUS"`
+	POOLS  []struct {
+		POOL                int     `json:"POOL"`
+		URL                 string  `json:"URL"`
+		Status              string  `json:"Status"`
+		Priority            int     `json:"Priority"`
+		Quota               int     `json:"Quota"`
+		LongPoll            string  `json:"Long Poll"`
+		Getworks            int     `json:"Getworks"`
+		Accepted            int     `json:"Accepted"`
+		Rejected            int     `json:"Rejected"`
+		Works               int     `json:"Works"`
+		Discarded           int     `json:"Discarded"`
+		Stale               int     `json:"Stale"`
+		GetFailures         int     `json:"Get Failures"`
+		RemoteFailures      int     `json:"Remote Failures"`
+		User                string  `json:"User"`
+		LastShareTime       int     `json:"Last Share Time"`
+		Diff1Shares         int     `json:"Diff1 Shares"`
+		ProxyType           string  `json:"Proxy Type"`
+		Proxy               string  `json:"Proxy"`
+		DifficultyAccepted  int     `json:"Difficulty Accepted"`
+		DifficultyRejected  int     `json:"Difficulty Rejected"`
+		DifficultyStale     int     `json:"Difficulty Stale"`
+		LastShareDifficulty int     `json:"Last Share Difficulty"`
+		WorkDifficulty      int     `json:"Work Difficulty"`
+		HasStratum          int     `json:"Has Stratum"`
+		StratumActive       bool    `json:"Stratum Active"`
+		StratumURL          string  `json:"Stratum URL"`
+		StratumDifficulty   int     `json:"Stratum Difficulty"`
+		BestShare           int     `json:"Best Share"`
+		PoolRejected        float64 `json:"Pool Rejected%"`
+		PoolStale           int     `json:"Pool Stale%"`
+		BadWork             float64 `json:"Bad Work"`
+		CurrentBlockHeight  int     `json:"Current Block Height"`
+		CurrentBlockVersion int     `json:"Current Block Version"`
 	} `json:"POOLS"`
 }
 
 type SummaryResponse struct {
-	STATUS []struct {
-		STATUS string `json:"STATUS"`
-		Msg    string `json:"Msg"`
-	} `json:"STATUS"`
+	STATUS  ResponseStatus `json:"STATUS"`
 	SUMMARY []struct {
 		Elapsed               int     `json:"Elapsed"`
 		MHSAv                 float64 `json:"MHS av"`
@@ -217,4 +210,3 @@ type SummaryResponse struct {
 		BtminerFastBoot       string  `json:"Btminer Fast Boot"`
 	} `json:"SUMMARY"`
 }
-
